@@ -1,0 +1,10 @@
+FROM python:3.8
+
+RUN mkdir -p /opt/services/emptyproject
+WORKDIR /opt/services/emptyproject
+
+RUN pip install django requests
+
+COPY . .
+
+CMD ["gunicorn", "--bind", ":80", emptyapp.wsgi:application]
