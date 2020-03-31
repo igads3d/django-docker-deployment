@@ -8,24 +8,16 @@ services:
     environment:
       POSTGRES_PASSWORD: asshole
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
-
   application:
     build:
       context: .
-      dockerfile: Dockerfile.python
-    ports:
-      - 80:80
+      dockerfile: docker/Dockerfile.python
     restart: always
 
   nginx:
     build:
       context: .
-      dockerfile: Dockerfile.nginx
+      dockerfile: docker/Dockerfile.nginx
     ports:
       - 80:80
     restart: always
