@@ -1,3 +1,6 @@
 FROM nginx
 
+RUN mkdir -p /opt/services/emptyproject/
+COPY emptyproject/static/ /opt/services/emptyproject/
+
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf

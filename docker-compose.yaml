@@ -3,7 +3,7 @@ version: '3.1'
 services:
 
   database:
-    image: postgres
+    image: igads3d/postgres-emptyproject
     restart: always
     environment:
       POSTGRES_PASSWORD: asshole
@@ -17,6 +17,7 @@ services:
     restart: always
     depends_on:
       - database
+    entrypoint: /docker-entrypoint.sh
 
   nginx:
     build:

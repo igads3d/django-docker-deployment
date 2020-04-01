@@ -4,11 +4,14 @@ RUN mkdir -p /opt/services/emptyproject
 WORKDIR /opt/services/
 RUN python -m venv emptyproject
 WORKDIR emptyproject
+RUN mkdir emptyproject/
 
-COPY emptyproject/ .
+COPY emptyproject/emptyapp emptyproject
+COPY emptyproject/emptyproject emptyproject
+COPY emptyproject/manage.py emptyproject
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-RUN python manage.py makemigrations
-RUN python manage.py migrate
+
+COPY docker/docker-entrypoint.sh /docker-entrypoint.sh
 
 CMD ["gunicorn", "--bind", "0.0.0.0:80", "--chdir", "emptyproject/", "emptyproject.wsgi"]
