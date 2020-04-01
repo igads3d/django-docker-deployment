@@ -1,9 +1,12 @@
 FROM python:3.8
 
 RUN mkdir -p /opt/services/emptyproject
-WORKDIR /opt/services/emptyproject
+WORKDIR /opt/services/
+RUN python -m venv emptyproject
+WORKDIR emptyproject
 
-RUN git clone https://github.com/igads3d/django-docker-deployment
+COPY emptyproject/ .
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-CMD ["gunicorn", "--bind", ":80", emptyapp.wsgi:application]
+CMD ["gunicorn", "--bind", "0.0.0.0:80", "--chdir", "emptyproject/", "emptyproject.wsgi"]

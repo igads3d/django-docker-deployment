@@ -2,11 +2,13 @@ version: '3.1'
 
 services:
 
-  db:
+  database:
     image: postgres
     restart: always
     environment:
       POSTGRES_PASSWORD: asshole
+      POSTGRES_USER: emptyproject-user
+      POSTGRES_DB: emptyproject-db
 
   application:
     build:
