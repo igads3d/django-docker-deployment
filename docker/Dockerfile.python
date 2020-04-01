@@ -8,5 +8,7 @@ WORKDIR emptyproject
 COPY emptyproject/ .
 COPY requirements.txt .
 RUN pip install -r requirements.txt
+RUN python emptyproject/manage.py makemigrations
+RUN python emptyproject/manage.py migrate
 
 CMD ["gunicorn", "--bind", "0.0.0.0:80", "--chdir", "emptyproject/", "emptyproject.wsgi"]
