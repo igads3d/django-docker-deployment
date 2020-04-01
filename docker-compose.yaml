@@ -15,7 +15,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile.python
     restart: always
-    depends-on:
+    depends_on:
       -database
 
   nginx:
@@ -25,5 +25,5 @@ services:
     ports:
       - 80:80
     restart: always
-    depends-on:
+    depends_on:
       - application
