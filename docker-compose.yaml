@@ -16,7 +16,7 @@ services:
       dockerfile: docker/Dockerfile.python
     restart: always
     depends_on:
-      -database
+      - database
 
   nginx:
     build:
