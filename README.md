@@ -103,7 +103,7 @@ server {
     server_name emptyapp;
 
     location / {
-        #i don't really know what headers do i need, so i pass all the common ones
+        # i don't really know what headers do i need, so i pass all the common ones
         proxy_pass http://application_server;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Real-IP $remote_addr;
@@ -113,8 +113,8 @@ server {
     }
 
     location /static/ {
-        #keep in mind that 'static root' does not include the 'static/' directory;
-        #by the way, it is located in `/opt/services/emptyproject/static`
+        # keep in mind that 'static root' does not include the 'static/' directory;
+        # by the way, it is located in `/opt/services/emptyproject/static`
         root /opt/services/emptyproject;
     }
 
@@ -129,22 +129,22 @@ User, password and database name are configured at runtime by Docker-compose.
 ```dockerfile
 FROM python:3.8
 
-#step 1 from "On Django side" section 
+# step 1 from "On Django side" section 
 RUN mkdir -p /opt/services/emptyproject
 WORKDIR /opt/services/
 RUN python -m venv emptyproject
 WORKDIR emptyproject
-#now we operate in /opt/services/emptyproject 
-#i probably should've been named this like 'webapp' or something
+# now we operate in /opt/services/emptyproject 
+# i probably should've been named this like 'webapp' or something
 
-#make /opt/services/emptyproject/emptyproject/emptyproject directory. Foken hell
+# make /opt/services/emptyproject/emptyproject/emptyproject directory. Foken hell
 #         empty-django-app^   manage.py^          ^settings and urls here
 RUN mkdir -p emptyproject/emptyproject
 
 # make /opt/services/emptyproject/emptyproject/emptyapp directory
 RUN mkdir -p emptyproject/emptyapp
 
-#copy 'emptyapp/', 'emptyproject/' and `manage.py` where they are belong, don't touch 'static/'
+# copy 'emptyapp/', 'emptyproject/' and `manage.py` where they are belong, don't touch 'static/'
 COPY emptyproject/emptyapp emptyproject/emptyapp
 COPY emptyproject/emptyproject emptyproject/emptyproject
 COPY emptyproject/manage.py emptyproject
@@ -152,7 +152,7 @@ COPY emptyproject/manage.py emptyproject
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-#copy entrypoint and do not forget about "execute" permission
+# copy entrypoint and do not forget about "execute" permission
 COPY docker/docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 ```
@@ -162,16 +162,16 @@ RUN chmod +x /docker-entrypoint.sh
 
 cd /opt/services/emptyproject/
 
-#i don't know if we need to activate the venv, but why not
+# i don't know if we need to activate the venv, but why not
 source /bin/activate
 cd emptyproject
 
-#migrations are made at runtime
+# migrations are made at runtime
 python manage.py makemigrations
 python manage.py migrate
 
-#gunicorn should be started from where your 'manage.py' is located
-#in case if you are starting it from another directory, use '--chdir'
+# gunicorn should be started from where your 'manage.py' is located
+# in case if you are starting it from another directory, use '--chdir'
 gunicorn --bind 0.0.0.0:80 emptyproject.wsgi
 ```
 
@@ -179,17 +179,17 @@ gunicorn --bind 0.0.0.0:80 emptyproject.wsgi
 ```dockerfile
 FROM nginx
 
-#copy static
+# copy static
 RUN mkdir -p /opt/services/emptyproject/static
 COPY emptyproject/static/ /opt/services/emptyproject/static
 
-#copy config (keep in mind, that this is an include file, not the main config)
+# copy config (keep in mind, that this is an include file, not the main config)
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 ```
 
 4. Create `docker-compose.yaml`
 ```yaml
-#don't know why 3.1, but why not
+# don't know why 3.1, but why not
 version: '3.1'
 
 services:
@@ -203,14 +203,14 @@ services:
       POSTGRES_DB: emptyproject-db
 
   application:
-    #our Dockerfiles are not located in our build context directory
+    # our Dockerfiles are not located in our build context directory
     build:
       context: .
       dockerfile: docker/Dockerfile.python
     restart: always
     depends_on:
       - database
-    #docker-entrypoint.sh is already inside the container
+    # docker-entrypoint.sh is already inside the container
     entrypoint: /docker-entrypoint.sh
 
   nginx:
