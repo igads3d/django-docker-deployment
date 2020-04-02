@@ -1,5 +1,5 @@
 # django-docker-deployment
-This repo shows how one can deploy his/her Django application using Docker-compose. It's kind of **very** detailed memo on how to do all 
+This repo shows how one can deploy their Django application using Docker-compose. It's kind of **very** detailed memo on how to do all 
 that stuff. 
 There definitely should be a better way to do that, so if you know how to do it better, please, share your knowledge. 
 
