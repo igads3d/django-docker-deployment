@@ -1,6 +1,8 @@
 FROM nginx
 
+# copy static
 RUN mkdir -p /opt/services/emptyproject/static
 COPY emptyproject/static/ /opt/services/emptyproject/static
 
+# copy config (keep in mind, that this is an include file, not the main config)
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf

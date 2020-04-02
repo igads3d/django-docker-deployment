@@ -1,9 +1,10 @@
+# don't know why 3.1, but why not
 version: '3.1'
 
 services:
 
   database:
-    image: igads3d/postgres-emptyproject
+    image: postgres
     restart: always
     environment:
       POSTGRES_PASSWORD: asshole
@@ -11,12 +12,14 @@ services:
       POSTGRES_DB: emptyproject-db
 
   application:
+    # our Dockerfiles are not located in our build context directory
     build:
       context: .
       dockerfile: docker/Dockerfile.python
     restart: always
     depends_on:
       - database
+    # docker-entrypoint.sh is already inside the container
     entrypoint: /docker-entrypoint.sh
 
   nginx:

@@ -1,19 +1,28 @@
 FROM python:3.8
 
-RUN mkdir -p /opt/services/emptyproject
+# step 1 from "On Django side" section 
+RUN mkdir -p /opt/services/webapp
 WORKDIR /opt/services/
-RUN python -m venv emptyproject
-WORKDIR emptyproject
+RUN python -m venv webapp
+WORKDIR webapp
+#now we operate in /opt/services/webapp 
+
+
+# make /opt/services/webapp/emptyproject/emptyproject directory
+#      empty-django-app^  manage.py^          ^settings and urls here
 RUN mkdir -p emptyproject/emptyproject
+
+# make /opt/services/webapp/emptyproject/emptyapp directory
 RUN mkdir -p emptyproject/emptyapp
 
+# copy 'emptyapp/', 'emptyproject/' and `manage.py` where they are belong, don't touch 'static/'
 COPY emptyproject/emptyapp emptyproject/emptyapp
 COPY emptyproject/emptyproject emptyproject/emptyproject
 COPY emptyproject/manage.py emptyproject
+
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
+# copy entrypoint and do not forget about "execute" permission
 COPY docker/docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
-
-#CMD ["gunicorn", "--bind", "0.0.0.0:80", "--chdir", "emptyproject/", "emptyproject.wsgi"]
