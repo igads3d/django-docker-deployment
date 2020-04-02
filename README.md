@@ -126,7 +126,7 @@ User, password and database name are configured at runtime by Docker-compose.
 
 ### On Docker/Docker-compose side
 1. Create `Dockerfile.python`
-```docker
+```dockerfile
 FROM python:3.8
 
 #step 1 from "On Django side" section 
@@ -176,7 +176,7 @@ gunicorn --bind 0.0.0.0:80 emptyproject.wsgi
 ```
 
 3. Create `Dockerfile.nginx`
-```
+```dockerfile
 FROM nginx
 
 #copy static
