@@ -57,7 +57,7 @@ Pip packages.
 def test(request):
 	return HttpResponse("horsecock")
 ```
-4. Add URL pattern to the list ('emptyproject/urls.py'):
+4. Add URL pattern to the list (`emptyproject/urls.py`):
 ```python
 urlpatterns = [
     path("test/", views.test, name='test'),
