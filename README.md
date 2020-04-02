@@ -226,7 +226,7 @@ services:
 ```
 ### We're all set
 Now, to deploy this application on any computer we just need to do following steps:
-```
+```sh
 git clone https://github.com/igads3d/django-docker-deployment.git
 cd django-docker-deployment
 docker-compose up --build
